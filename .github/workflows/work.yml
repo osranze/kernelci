@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: Ylarod/setup-ndk-clang@v1
         with:
-          ndk-version: r29
+          ndk-version: r30
       - run: clang --version
       - name: Set swap
         run: |
@@ -57,9 +57,9 @@ jobs:
           sed -i 's/check_defconfig//' ./common/build.config.gki
           sed -i '$s|echo "\$res"|echo "-castor"|' ./common/scripts/setlocalversion
           cd common
-          curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/refs/heads/main/kernel/setup.sh" | bash -s main
+          curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/refs/heads/main/kernel/setup.sh" | bash -
           cd KernelSU
-          KSU_VERSION=$(expr $(curl -sI "https://api.github.com/repos/tiann/KernelSU/commits?sha=main&per_page=1" | grep -i "link:" | sed -n 's/.*page=\([0-9]*\)>; rel="last".*/\1/p') "+" 30000)
+          KSU_VERSION=$(expr $(git rev-list --count HEAD) + 30000)
           echo "KSUVER=$KSU_VERSION" >> $GITHUB_ENV
           sed -i "s/DKSU_VERSION=16/DKSU_VERSION=${KSU_VERSION}/" kernel/Kbuild
 
