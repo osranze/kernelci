@@ -49,29 +49,30 @@ jobs:
 
           # Initialize and sync kernel source
           echo "Initializing and syncing kernel source..."
-          git clone https://github.com/OnePlus-12-Development/android_kernel_oneplus_sm8650.git --depth 1 --branch lineage-23.2 common
-          git clone https://github.com/OnePlus-12-Development/android_kernel_oneplus_sm8650-modules.git --depth 1 --branch lineage-23.2 sm8650-modules
+          git clone https://github.com/yaap/kernel_oneplus_sm8650.git --depth 1 --branch seventeen common
+          # git clone https://github.com/OnePlus-12-Development/android_kernel_oneplus_sm8650-modules.git --depth 1 --branch lineage-23.2 sm8650-modules
 
           # Modify
           rm -rf ./common/android/abi_gki_protected_exports_* || echo "No protected exports!"
           sed -i 's/check_defconfig//' ./common/build.config.gki
           sed -i '$s|echo "\$res"|echo "-castor"|' ./common/scripts/setlocalversion
           cd common
-          patch -p1 < ../patches/sysvipc.patch
-          patch -p1 < ../patches/crc_check.patch
+          curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
+          # patch -p1 < ../patches/sysvipc.patch
+          # patch -p1 < ../patches/crc_check.patch
 
       - name: Add Configuration Settings
         run: |
           echo "Changing to configuration directory: /mnt/kernel_workspace..."
           cd "/mnt/kernel_workspace"
-          echo "Adding configuration settings to gki_defconfig..."
-          echo "CONFIG_PID_NS=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_POSIX_MQUEUE=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_SYSVIPC=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_IPC_NS=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_USER_NS=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_TMPFS_XATTR=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_DEVTMPFS=y" >> ./common/arch/arm64/configs/gki_defconfig
+          # echo "Adding configuration settings to gki_defconfig..."
+          # echo "CONFIG_PID_NS=y" >> ./common/arch/arm64/configs/gki_defconfig
+          # echo "CONFIG_POSIX_MQUEUE=y" >> ./common/arch/arm64/configs/gki_defconfig
+          # echo "CONFIG_SYSVIPC=y" >> ./common/arch/arm64/configs/gki_defconfig
+          # echo "CONFIG_IPC_NS=y" >> ./common/arch/arm64/configs/gki_defconfig
+          # echo "CONFIG_USER_NS=y" >> ./common/arch/arm64/configs/gki_defconfig
+          # echo "CONFIG_TMPFS_XATTR=y" >> ./common/arch/arm64/configs/gki_defconfig
+          # echo "CONFIG_DEVTMPFS=y" >> ./common/arch/arm64/configs/gki_defconfig
 
       - name: Build the Kernel
         run: |
