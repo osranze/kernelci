@@ -94,7 +94,7 @@ jobs:
           cd "/mnt/kernel_workspace"
           mkdir out
           cd ./common
-          export Kargs="KBUILD_BUILD_HOST=castor KBUILD_BUILD_USER=ci -j$(nproc --all) O=/mnt/kernel_workspace/out CC=clang LLVM=1 LLVM_IAS=1 ARCH=arm64"
+          export Kargs="KBUILD_BUILD_HOST=ci KBUILD_BUILD_USER=ci -j$(nproc --all) O=/mnt/kernel_workspace/out CC=clang LLVM=1 LLVM_IAS=1 ARCH=arm64"
           make $Kargs gki-stock_defconfig vendor/oplus/pineapple_GKI.config vendor/oplus/waffle.config vendor/oplus/giulia.config
           make $Kargs Image
 
