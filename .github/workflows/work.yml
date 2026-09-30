@@ -10,6 +10,7 @@ jobs:
       - uses: actions/checkout@v7
       - name: set clang
         run: |
+          mkdir toolchain
           wget https://github.com/bachnxuan/aosp_clang_mirror/releases/download/clang-r596125-15544236/clang-r596125.tar.gz -O clang.tar.gz
           tar -xf clang.tar.gz -C toolchain
           export PATH=$PWD/toolchain/bin:$PATH
