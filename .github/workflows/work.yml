@@ -63,6 +63,7 @@ jobs:
               -e '/^[[:space:]]*if (key_pass)$/i #ifdef USE_PKCS11_ENGINE' \
               -e '/ENGINE_ctrl_cmd_string(e, "PIN", key_pass, 0)/a #endif' \
               common/certs/extract-cert.c
+          sed -i 's|^\(\$(obj)/config_data:\) arch/arm64/configs/gki-stock_defconfig FORCE|\1 $(KCONFIG_CONFIG) FORCE|' ./common/kernel/Makefile
           # cd common
           curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/refs/heads/main/kernel/setup.sh" | bash -
           cd KernelSU
