@@ -50,14 +50,19 @@ jobs:
           # Initialize and sync kernel source
           echo "Initializing and syncing kernel source..."
           git clone https://github.com/yaap/kernel_oneplus_sm8650.git --depth 1 --branch seventeen common
-          # git clone https://github.com/OnePlus-12-Development/android_kernel_oneplus_sm8650-modules.git --depth 1 --branch lineage-23.2 sm8650-modules
+          git clone https://github.com/yaap/kernel_oneplus_sm8650-modules.git --depth 1 --branch seventeen sm8650-modules
 
           # Modify
           rm -rf ./common/android/abi_gki_protected_exports_* || echo "No protected exports!"
           sed -i 's/check_defconfig//' ./common/build.config.gki
           sed -i '$s|echo "\$res"|echo "-castor"|' ./common/scripts/setlocalversion
           cd common
-          curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
+          curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/refs/heads/main/kernel/setup.sh" | bash -s main
+          cd KernelSU
+          KSU_VERSION=$(expr $(curl -sI "https://api.github.com/repos/tiann/KernelSU/commits?sha=main&per_page=1" | grep -i "link:" | sed -n 's/.*page=\([0-9]*\)>; rel="last".*/\1/p') "+" 30000)
+          echo "KSUVER=$KSU_VERSION" >> $GITHUB_ENV
+          sed -i "s/DKSU_VERSION=16/DKSU_VERSION=${KSU_VERSION}/" kernel/Kbuild
+
           # patch -p1 < ../patches/sysvipc.patch
           # patch -p1 < ../patches/crc_check.patch
 
