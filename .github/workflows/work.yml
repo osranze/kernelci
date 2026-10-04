@@ -78,8 +78,8 @@ jobs:
         run: |
           echo "Changing to configuration directory: /mnt/kernel_workspace..."
           cd "/mnt/kernel_workspace"
-          # echo "Adding configuration settings to gki_defconfig..."
-          # echo "CONFIG_PID_NS=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "Adding configuration settings to gki_defconfig..."
+          #lecho "CONFIG_NETFILTER_XT_TARGET_HL=y" >> ./common/arch/arm64/configs/gki_defconfig
           # echo "CONFIG_POSIX_MQUEUE=y" >> ./common/arch/arm64/configs/gki_defconfig
           # echo "CONFIG_SYSVIPC=y" >> ./common/arch/arm64/configs/gki_defconfig
           # echo "CONFIG_IPC_NS=y" >> ./common/arch/arm64/configs/gki_defconfig
