@@ -58,7 +58,7 @@ jobs:
           # Modify
           rm -rf ./common/android/abi_gki_protected_exports_* || echo "No protected exports!"
           sed -i 's/check_defconfig//' ./common/build.config.gki
-          sed -i '$s|echo "\$res"|echo "-castor"|' ./common/scripts/setlocalversion
+          sed -i '$s|echo "\$res"|echo ""|' ./common/scripts/setlocalversion
           sed -i \
               -e '/^[[:space:]]*if (key_pass)$/i #ifdef USE_PKCS11_ENGINE' \
               -e '/ENGINE_ctrl_cmd_string(e, "PIN", key_pass, 0)/a #endif' \
